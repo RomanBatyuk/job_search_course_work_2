@@ -1,4 +1,7 @@
+import os
+
 import psycopg2
+from dotenv import load_dotenv
 
 
 class DBManager:
@@ -85,11 +88,14 @@ class DBManager:
 def all_functionality():
     """Вспомогательная функция для модуля main.py,
     собирающая в себе весь функционал модуля iteraction_with_vacancies"""
+    load_dotenv()
+    password = os.getenv("password")
+
     db_config = {
         "host": "localhost",
         "database": "my_new_db",
         "user": "postgres",
-        "password": "43738",
+        "password": password,
         "port": 5432,
     }
 

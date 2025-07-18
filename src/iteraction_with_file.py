@@ -1,13 +1,18 @@
+import os
+
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from src.iteraction_with_api import connect_apy
+from dotenv import load_dotenv
 
 
 def create_postgres_db():
     """Подключение к postgres для создания новой БД"""
+    load_dotenv()
+    password = os.getenv("password")
     conn = psycopg2.connect(
-        dbname="postgres", user="postgres", password="43738", host="localhost"
+        dbname="postgres", user="postgres", password=password, host="localhost"
     )
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = conn.cursor()
@@ -28,11 +33,13 @@ def create_postgres_db():
 
 def filling_in_table_organizations():
     """Создание таблицы для организаций и заполнение данными"""
+    load_dotenv()
+    password = os.getenv("password")
     conn_params = {
         "host": "localhost",
         "database": "my_new_db",
         "user": "postgres",
-        "password": "43738",
+        "password": password,
     }
     with psycopg2.connect(**conn_params) as conn:
         with conn.cursor() as cur:
@@ -60,13 +67,15 @@ def filling_in_table_organizations():
 
 def filling_in_table_vacancies():
     """Создание таблицы для вакансий и вставка данных с обработкой зарплаты"""
+    load_dotenv()
+    password = os.getenv("password")
 
     # параметры подключения к базе данных
     conn_params = {
         "host": "localhost",
         "database": "my_new_db",
         "user": "postgres",
-        "password": "43738",
+        "password": password,
     }
 
     with psycopg2.connect(**conn_params) as conn:
